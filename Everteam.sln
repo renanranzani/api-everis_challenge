@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Everteam", "Everteam\Everteam.csproj", "{C5C5B5A5-590A-477A-A4DF-EBD1A6E1320A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverteamTest", "EverteamTest\EverteamTest.csproj", "{645CF2B0-21F8-4C57-8981-AEEF86F893E0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5C5B5A5-590A-477A-A4DF-EBD1A6E1320A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5C5B5A5-590A-477A-A4DF-EBD1A6E1320A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5C5B5A5-590A-477A-A4DF-EBD1A6E1320A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5C5B5A5-590A-477A-A4DF-EBD1A6E1320A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{645CF2B0-21F8-4C57-8981-AEEF86F893E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{645CF2B0-21F8-4C57-8981-AEEF86F893E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{645CF2B0-21F8-4C57-8981-AEEF86F893E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{645CF2B0-21F8-4C57-8981-AEEF86F893E0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B77A7742-03CD-424A-B48D-90D1792B13D5}
+	EndGlobalSection
+EndGlobal
