@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace EverteamTest
 {
-
     [TestClass]
     public class OpportunityRepositoryTest
     {
@@ -19,9 +18,12 @@ namespace EverteamTest
         private readonly Mock<IRepositoryConnection> _repositoryConnectionMock;
 
         private readonly Mock<ICareerRepository> _careerRepositoryMock;
+
         private readonly Mock<IServiceRepository> _serviceRepositoryMock;
+
         private readonly Mock<IProfessionalLevelRepository> _professionalLevelRepositoryMock;
-        private readonly Mock<IOpportunityTypeRepository> _oppotunityTypeRepositoryMock;
+
+        private readonly Mock<IOpportunityTypeRepository> _opportunityTypeRepository;
 
         public OpportunityRepositoryTest()
         {
@@ -30,40 +32,60 @@ namespace EverteamTest
             _careerRepositoryMock = new Mock<ICareerRepository>();
             _serviceRepositoryMock = new Mock<IServiceRepository>();
             _professionalLevelRepositoryMock = new Mock<IProfessionalLevelRepository>();
-            _oppotunityTypeRepositoryMock = new Mock<IOpportunityTypeRepository>();
+            _opportunityTypeRepository = new Mock<IOpportunityTypeRepository>();
         }
 
+        //TESTES GetAllOpportunity:
+
         [TestMethod]
-        public void GetAllOportunities_OK()
+        public void GetAllOpportunities_Ok()
         {
             //Arrange
-            var JsonDataTable = @"[
-	        {
-                'OpportunityId': 1,
-		        'OpportunityName': 'Squad Care',
-		        'OpportunityRequirements': '.NET Core',
-		        'DesirableRequirements': 'Conhecimento em Kafka',
-		        'DateRegister':'2021-05-05T00:00:00',
-		        'ClosingDate':'2021-05-05T00:00:00',
-		        'CancellationDate':'2021-05-05T00:00:00',
-                'OpportunityStatus':true,
-		        'CareerId': 1,
-			    'ServiceId': 1,
-			    'ProfessionalLevelId': 1,
-			    'OpportunityTypeId': 1
-	        }
-            ]";
-
-            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetAllOportunities", It.IsAny<Dictionary<string, string>>())).Returns(JsonDataTable);
+            var jsonDataTable = @"[
+                    {
+                        'OpportunityId': '1',
+                        'OpportunityName': 'Squad Care',
+                        'OpportunityRequirements': '.NET Core',
+                        'DesirableRequirements': 'Conhecimento em Kafka',
+                        'DateRegister': '2021-05-05T00:00:00',
+                        'ClosingDate': '2021-05-05T00:00:00',
+                        'CancellationDate': '2021-05-05T00:00:00',
+                        'OpportunityStatus': true,
+                        'CareerId': '1',
+                        'ServiceId': '1',
+                        'ProfessionalLevelId': '1',
+                        'OpportunityTypeId': '1',
+                    },
+                    {
+                        'OpportunityId': '2',
+                        'OpportunityName': 'Squad Care',
+                        'OpportunityRequirements': '.NET Core',
+                        'DesirableRequirements': 'Conhecimento em Kafka',
+                        'DateRegister': '2021-05-05T00:00:00',
+                        'ClosingDate': '2021-05-05T00:00:00',
+                        'CancellationDate': '2021-05-05T00:00:00',
+                        'OpportunityStatus': 'false',
+                        'CareerId': '1',
+                        'ServiceId': '1',
+                        'ProfessionalLevelId': '1',
+                        'OpportunityTypeId': '1',    
+                    }
+                ]";
+            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetAllOpportunities", It.IsAny<Dictionary<string, string>>())).Returns(jsonDataTable);
 
             //Action
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-                _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+                _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
+
+            var result = repo.GetAllOpportunities();
+
+            //Assert
+            Assert.IsNotNull(result);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetAllOpportunities_Ex()
+        public void GetAllOpportunities_ArgumentException()
         {
             //Arrange
             var jsonDataTable = @"[{}]";
@@ -72,7 +94,7 @@ namespace EverteamTest
 
             //Action
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-                _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+                _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             var result = repo.GetAllOpportunities();
 
@@ -82,16 +104,13 @@ namespace EverteamTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void GetAllOportunities_Null()
+        public void GetAllOpportunities_ArgumentNullException()
         {
             //Arrange
-            var JsonDataTable = "";
 
-            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetAllOportunities", It.IsAny<Dictionary<string, string>>())).Returns(JsonDataTable);
-
-            //Action    
+            //Action
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-                _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+                _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             var result = repo.GetAllOpportunities();
 
@@ -99,34 +118,36 @@ namespace EverteamTest
             Assert.IsNull(result);
         }
 
+
+        //TESTES GetOpportunityByName:
+
         [TestMethod]
         public void GetOpportunityByName_Ok()
         {
             //Arrange
-            var JsonDataTable = @"[
-            {
-                'OpportunityId': 1,
-		        'OpportunityName': 'Squad Care',
-		        'OpportunityRequirements': '.NET Core',
-		        'DesirableRequirements': 'Conhecimento em Kafka',
-		        'DateRegister':'2021-05-05T00:00:00',
-		        'ClosingDate':'2021-05-05T00:00:00',
-		        'CancellationDate':'2021-05-05T00:00:00',
-                'OpportunityStatus':true,
-		        'CareerId': 1,
-			    'ServiceId': 1,
-			    'ProfessionalLevelId': 1,
-			    'OpportunityTypeId': 1
-	        }
+            var jsonDataTable = @"[
+                    {
+                        'OpportunityId': '1',
+                        'OpportunityName': 'Squad Care',
+                        'OpportunityRequirements': '.NET Core',
+                        'DesirableRequirements': 'Conhecimento em Kafka',
+                        'DateRegister': '2021-05-05T00:00:00',
+                        'ClosingDate': '2021-05-05T00:00:00',
+                        'CancellationDate': '2021-05-05T00:00:00',
+                        'OpportunityStatus': false,
+                        'CareerId': '1',
+                        'ServiceId': '1',
+                        'ProfessionalLevelId': '1',
+                        'OpportunityTypeId': '1',
+                    }
                 ]";
-
             var opportunityName = "Squad Care";
 
-            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetOpportunityByName", It.IsAny<Dictionary<string, string>>())).Returns(JsonDataTable);
+            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetOpportunityByName", It.IsAny<Dictionary<string, string>>())).Returns(jsonDataTable);
 
             //Action
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-                _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+                _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             var result = repo.GetOpportunityByName(opportunityName);
 
@@ -136,40 +157,36 @@ namespace EverteamTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetOpportunityByName_Ex()
+        public void GetOpportunityByName_ArgumentException()
         {
-            //Arrange
-            var JsonDataTable = @"[{}]";
+            var jsonDataTable = @"[{}]";
             var opportunityName = "Squad Care";
 
-            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetOpportunityByName", It.IsAny<Dictionary<string, string>>())).Returns(JsonDataTable);
+            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetOpportunityByName", It.IsAny<Dictionary<string, string>>())).Returns(jsonDataTable);
 
-            //Action
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-                _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+                _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             var result = repo.GetOpportunityByName(opportunityName);
 
-            //Assert
             Assert.IsNull(result);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
-        public void GetOpportunityByName_Null()
+        public void GetOpportunityByName_ArgumentNullException()
         {
-            //Arrange
             var opportunityName = "Squad Care";
 
-            //Action
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-                _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+               _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             var result = repo.GetOpportunityByName(opportunityName);
 
-            //Assert
-            Assert.IsNotNull(result);
+            Assert.IsNull(result);
         }
+
+        //TESTES InsertOpportunity:
 
         [TestMethod]
         public void InsertOpportunity_Ok()
@@ -201,7 +218,7 @@ namespace EverteamTest
 
             //Action
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+               _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             repo.InsertOpportunity(opportunity);
 
@@ -218,7 +235,7 @@ namespace EverteamTest
             var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
 
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+               _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             repo.InsertOpportunity(opportunity);
 
@@ -256,7 +273,7 @@ namespace EverteamTest
             _repositoryConnectionMock.Setup(x => x.SimpleExecuteCommand("InsertOpportunity", It.IsAny<Dictionary<string, string>>())).Throws(new Exception());
 
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+               _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             repo.InsertOpportunity(opportunity);
 
@@ -279,7 +296,7 @@ namespace EverteamTest
             var opporunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
 
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+               _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             repo.UpdateOpportunity(opporunity);
 
@@ -295,7 +312,7 @@ namespace EverteamTest
             var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpporunity);
 
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+               _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             repo.UpdateOpportunity(opportunity);
 
@@ -320,7 +337,7 @@ namespace EverteamTest
             _repositoryConnectionMock.Setup(x => x.SimpleExecuteCommand("UpdateOpportunity", It.IsAny<Dictionary<string, string>>())).Throws(new Exception());
 
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+               _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             repo.UpdateOpportunity(opportunity);
 
@@ -336,7 +353,7 @@ namespace EverteamTest
             var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
 
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+               _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             repo.DeleteOpportunity(opportunity);
 
@@ -351,7 +368,7 @@ namespace EverteamTest
             var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
 
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+               _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             repo.DeleteOpportunity(opportunity);
 
@@ -369,7 +386,7 @@ namespace EverteamTest
             _repositoryConnectionMock.Setup(x => x.SimpleExecuteCommand("DeleteOpportunity", It.IsAny<Dictionary<string, string>>())).Throws(new Exception());
 
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
-               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+               _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
             repo.DeleteOpportunity(opportunity);
 

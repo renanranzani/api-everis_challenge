@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "q7VVPb4WY7ifN6BHkCQYAmVJAtaBk1yy3MxaDgXuMWQz743DjH8VtlCtmQofLvVO3fX8BzbcSvsvPi6/CZtV7w==",
+  "dgSpecHash": "SE7zaVKniIBXmIcPl9sEy+yEYAEaODg4RCfkBdwPxb+psUK1CAiOZ7GX5KF+rWUifLAcCaMADmMfwf4B90AkkQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\renan\\source\\repos\\EverisTeam\\Everteam\\Everteam.csproj",
+  "projectFilePath": "D:\\Renan\\api-everis_challenge\\Everteam\\Everteam.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\renan\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\renan\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

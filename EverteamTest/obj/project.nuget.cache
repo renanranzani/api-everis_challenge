@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oE8xQ7zyZQpwWeNPHDjgQXhukiAqPoZXcbteIeOUUCHoeKKRE/Kqa/8ThtTbnEWsYTAfcjDOvFJjLQvzylA2Bw==",
+  "dgSpecHash": "k5xPCjvoZbwIq2u4ifxVSAP4ErmOqvb3t5ChvPegT2q/epZZzps4B9Zqw5UPjHmeSAcGqApLeVZoHg23vumYsg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\renan\\source\\repos\\EverisTeam\\EverteamTest\\EverteamTest.csproj",
+  "projectFilePath": "D:\\Renan\\api-everis_challenge\\EverteamTest\\EverteamTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\renan\\.nuget\\packages\\castle.core\\4.4.0\\castle.core.4.4.0.nupkg.sha512",
     "C:\\Users\\renan\\.nuget\\packages\\coverlet.collector\\1.3.0\\coverlet.collector.1.3.0.nupkg.sha512",

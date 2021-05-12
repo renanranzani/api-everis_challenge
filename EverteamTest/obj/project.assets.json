@@ -6436,11 +6436,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\renan\\source\\repos\\EverisTeam\\EverteamTest\\EverteamTest.csproj",
+      "projectUniqueName": "D:\\Renan\\api-everis_challenge\\EverteamTest\\EverteamTest.csproj",
       "projectName": "EverteamTest",
-      "projectPath": "C:\\Users\\renan\\source\\repos\\EverisTeam\\EverteamTest\\EverteamTest.csproj",
+      "projectPath": "D:\\Renan\\api-everis_challenge\\EverteamTest\\EverteamTest.csproj",
       "packagesPath": "C:\\Users\\renan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\renan\\source\\repos\\EverisTeam\\EverteamTest\\obj\\",
+      "outputPath": "D:\\Renan\\api-everis_challenge\\EverteamTest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -6461,8 +6461,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\renan\\source\\repos\\EverisTeam\\Everteam\\Everteam.csproj": {
-              "projectPath": "C:\\Users\\renan\\source\\repos\\EverisTeam\\Everteam\\Everteam.csproj"
+            "D:\\Renan\\api-everis_challenge\\Everteam\\Everteam.csproj": {
+              "projectPath": "D:\\Renan\\api-everis_challenge\\Everteam\\Everteam.csproj"
             }
           }
         }

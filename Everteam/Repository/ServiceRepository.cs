@@ -60,6 +60,7 @@ namespace Everteam.Repository
             {
                 Service service = null;
 
+                parameters.Clear();
                 parameters.Add("@ServiceId", serviceId.ToString());
 
                 var read = _repositoryConnection.SearchCommand("GetServiceById", parameters);

@@ -1,4 +1,5 @@
-﻿using Everteam.Interfaces;
+﻿using Everteam.BaseRepository;
+using Everteam.Interfaces;
 using Everteam.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;

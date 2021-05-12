@@ -57,12 +57,15 @@ namespace Everteam.Repository
                     vacationOpportunity.VacationCancellationDate = Convert.ToDateTime(row["VacationCancellationDate"]);
                     vacationOpportunity.VacationOpportunityStatus = Convert.ToBoolean(row["VacationOpportunityStatus"]);
 
+                    vacationOpportunity.Career = new Career();
                     vacationOpportunity.Career.CareerId = Convert.ToInt32(row["CareerId"]);
                     vacationOpportunity.Career = _careerRepository.GetCareerById(vacationOpportunity.Career.CareerId);
 
+                    vacationOpportunity.ProfessionalLevel = new ProfessionalLevel();
                     vacationOpportunity.ProfessionalLevel.ProfessionalLevelId = Convert.ToInt32(row["ProfessionalLevelId"]);
                     vacationOpportunity.ProfessionalLevel = _professionalLevelRepository.GetProfessionalLevelById(vacationOpportunity.ProfessionalLevel.ProfessionalLevelId);
 
+                    vacationOpportunity.OpportunityType = new OpportunityType();
                     vacationOpportunity.OpportunityType.OpportunityTypeId = Convert.ToInt32(row["OpportunityTypeId"]);
                     vacationOpportunity.OpportunityType = _opportunityTypeRepository.GetOpportunityTypeById(vacationOpportunity.OpportunityType.OpportunityTypeId);
 
@@ -100,12 +103,15 @@ namespace Everteam.Repository
                     vacationOpportunity.VacationCancellationDate = Convert.ToDateTime(row["VacationCancellationDate"]);
                     vacationOpportunity.VacationOpportunityStatus = Convert.ToBoolean(row["VacationOpportunityStatus"]);
 
+                    vacationOpportunity.Career = new Career();
                     vacationOpportunity.Career.CareerId = Convert.ToInt32(row["CareerId"]);
                     vacationOpportunity.Career = _careerRepository.GetCareerById(vacationOpportunity.Career.CareerId);
 
+                    vacationOpportunity.ProfessionalLevel = new ProfessionalLevel();
                     vacationOpportunity.ProfessionalLevel.ProfessionalLevelId = Convert.ToInt32(row["ProfessionalLevelId"]);
                     vacationOpportunity.ProfessionalLevel = _professionalLevelRepository.GetProfessionalLevelById(vacationOpportunity.ProfessionalLevel.ProfessionalLevelId);
 
+                    vacationOpportunity.OpportunityType = new OpportunityType();
                     vacationOpportunity.OpportunityType.OpportunityTypeId = Convert.ToInt32(row["OpportunityTypeId"]);
                     vacationOpportunity.OpportunityType = _opportunityTypeRepository.GetOpportunityTypeById(vacationOpportunity.OpportunityType.OpportunityTypeId);
                 }
@@ -150,16 +156,8 @@ namespace Everteam.Repository
                 parameters.Add("@VacationCancellationDate", vacationOpportunity.VacationCancellationDate.ToString());
                 parameters.Add("@VacationOpportunityStatus", vacationOpportunity.VacationOpportunityStatus.ToString());
                 parameters.Add("@VacationOpportunityId", vacationOpportunity.VacationOpportunityId.ToString());
+
                 _repositoryConnection.SimpleExecuteCommand("UpdateVacationOpportunity", parameters);
-
-                var career = vacationOpportunity.Career;
-                _careerRepository.UpdateCareer(career);
-
-                var professionalLevel = vacationOpportunity.ProfessionalLevel;
-                _professionalLevelRepository.UpdateProfessionalLevel(professionalLevel);
-
-                var opportunityType = vacationOpportunity.OpportunityType;
-                _opportunityTypeRepository.UpdateOpportunityType(opportunityType);
             }
             catch(Exception ex)
             {
@@ -173,15 +171,6 @@ namespace Everteam.Repository
             {
                 parameters.Add("@VacationOpportunityId", vacationOpportunity.VacationOpportunityId.ToString());
                 _repositoryConnection.SimpleExecuteCommand("DeleteVacationOpportunity", parameters);
-
-                var career = vacationOpportunity.Career;
-                _careerRepository.DeleteCareer(career);
-
-                var professionalLevel = vacationOpportunity.ProfessionalLevel;
-                _professionalLevelRepository.DeleteProfessionalLevel(professionalLevel);
-
-                var opportunityType = vacationOpportunity.OpportunityType;
-                _opportunityTypeRepository.DeleteOpportunityType(opportunityType);
             }
             catch(Exception ex)
             {
