@@ -62,15 +62,15 @@ namespace EverteamTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void GetAllOportunities_Ex()
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetAllOpportunities_Ex()
         {
             //Arrange
-            var JsonDataTable = @"[{}]";
+            var jsonDataTable = @"[{}]";
 
-            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetAllOportunities", It.IsAny<Dictionary<string, string>>())).Returns(JsonDataTable);
+            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetAllOpportunities", It.IsAny<Dictionary<string, string>>())).Returns(jsonDataTable);
 
-            //Action    
+            //Action
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
                 _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
 
@@ -174,31 +174,29 @@ namespace EverteamTest
         [TestMethod]
         public void InsertOpportunity_Ok()
         {
-            var jsonOpportunity = @"[	            
-                    {
-                    'opportunityId': 1,
-		            'opportunityName': 'Squad Care',
-		            'opportunityRequirements': '.NET Core',
-		            'desirableRequirements': 'Conhecimento em Kafka',
-		            'dateRegister':'2021-05-05T00:00:00',
-		            'closingDate':'2021-05-05T00:00:00',
-		            'cancellationDate':'2021-05-05T00:00:00',
-                    'status':true,
-		            'career': {
-			            'careerId': 1
-		            },
-		            'service': {
-			            'serviceId': 1
-		            },
-		            'professionalLevel':{
-			            'professionalLevelId': 1
-		            },
-		            'opportunityType': {
-			            'opportunityTypeId': 1
-		            }
-	            }
-            ]";
-
+            //Arrange
+            var jsonOpportunity = @"{
+                'opportunityId': 1,
+                'opportunityName': 'Squad Care alterado',
+                'opportunityRequirements': '.NET Core',
+                'desirableRequirements': 'Conhecimento em Kafka',
+                'dateRegister': '2021-05-05T00:00:00',
+                'closingDate': '2021-05-05T00:00:00',
+                'cancellationDate': '2021-05-05T00:00:00',
+                'opportunityStatus': false,
+                'career': {
+                    'careerId': 1
+                },
+                'service': {
+                    'serviceId': 1
+                },
+                'professionalLevel': {
+                    'professionalLevelId': 1
+                },
+                'opportunityType': {
+                    'opportunityTypeId': 1
+                }
+                }";
             var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
 
             //Action
@@ -209,7 +207,173 @@ namespace EverteamTest
 
             //Assert
             Assert.IsTrue(true);
+        }
 
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void InsertOpportunity_NullReferenceException()
+        {
+            var jsonOpportunity = @" ";
+
+            var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
+
+            var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
+               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+
+            repo.InsertOpportunity(opportunity);
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void InsertOpportunity_Exception()
+        {
+            var jsonOpportunity = @"{
+                'opportunityId': 1,
+                'opportunityName': 'Squad Care alterado',
+                'opportunityRequirements': '.NET Core',
+                'desirableRequirements': 'Conhecimento em Kafka',
+                'dateRegister': '2021-05-05T00:00:00',
+                'closingDate': '2021-05-05T00:00:00',
+                'cancellationDate': '2021-05-05T00:00:00',
+                'opportunityStatus': false,
+                'career': {
+                    'careerId': 1
+                },
+                'service': {
+                    'serviceId': 1
+                },
+                'professionalLevel': {
+                    'professionalLevelId': 1
+                },
+                'opportunityType': {
+                    'opportunityTypeId': 1
+                }
+                }";
+
+            var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
+            _repositoryConnectionMock.Setup(x => x.SimpleExecuteCommand("InsertOpportunity", It.IsAny<Dictionary<string, string>>())).Throws(new Exception());
+
+            var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
+               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+
+            repo.InsertOpportunity(opportunity);
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void UpdateOpportunity_Ok()
+        {
+            var jsonOpportunity = @"{      
+                'opportunityId': 1,
+		        'opportunityName': 'Squad Care alterado',
+		        'opportunityRequirements': '.NET Core',
+		        'desirableRequirements': 'Conhecimento em Kafka',
+		        'dateRegister':'2021-05-05',
+		        'closingDate':'2021-05-05',
+		        'cancellationDate':'2021-05-05',
+                'opportunityStatus': true
+                }";
+            var opporunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
+
+            var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
+               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+
+            repo.UpdateOpportunity(opporunity);
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void UpdateOpportunity_NullReferenceException()
+        {
+            var jsonOpporunity = @" ";
+
+            var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpporunity);
+
+            var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
+               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+
+            repo.UpdateOpportunity(opportunity);
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void UpdateOpportunity_Exception()
+        {
+            var jsonOpportunity = @"{      
+                'opportunityId': 1,
+		        'opportunityName': 'Squad Care alterado',
+		        'opportunityRequirements': '.NET Core',
+		        'desirableRequirements': 'Conhecimento em Kafka',
+		        'dateRegister':'2021-05-05',
+		        'closingDate':'2021-05-05',
+		        'cancellationDate':'2021-05-05',
+                'opportunityStatus': true
+                }";
+            var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
+            _repositoryConnectionMock.Setup(x => x.SimpleExecuteCommand("UpdateOpportunity", It.IsAny<Dictionary<string, string>>())).Throws(new Exception());
+
+            var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
+               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+
+            repo.UpdateOpportunity(opportunity);
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        public void DeleteOpportunity_Ok()
+        {
+            var jsonOpportunity = @"{      
+                'OpportunityId': 0
+                }";
+            var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
+
+            var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
+               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+
+            repo.DeleteOpportunity(opportunity);
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
+        public void DeleteOpportunity_NullReferenceException()
+        {
+            var jsonOpportunity = @" ";
+            var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
+
+            var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
+               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+
+            repo.DeleteOpportunity(opportunity);
+
+            Assert.IsTrue(true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public void DeleteOpportunity_Exception()
+        {
+            var jsonOpportunity = @"{      
+                'OpportunityId': 0
+                }";
+            var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
+            _repositoryConnectionMock.Setup(x => x.SimpleExecuteCommand("DeleteOpportunity", It.IsAny<Dictionary<string, string>>())).Throws(new Exception());
+
+            var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
+               _professionalLevelRepositoryMock.Object, _oppotunityTypeRepositoryMock.Object, _repositoryConnectionMock.Object);
+
+            repo.DeleteOpportunity(opportunity);
+
+            Assert.IsTrue(true);
         }
     }
 }
