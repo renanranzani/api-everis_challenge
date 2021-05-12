@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace EverteamTest
 {
     [TestClass]
-    public class VacationOpportunityTest
+    public class VacationOpportunityRepositoryTest
     {
         private readonly Mock<IConfiguration> _configurationMock;
 
@@ -23,7 +23,7 @@ namespace EverteamTest
 
         private readonly Mock<IOpportunityTypeRepository> _opportunityTypeRepository;
 
-        public VacationOpportunityTest()
+        public VacationOpportunityRepositoryTest()
         {
             _configurationMock = new Mock<IConfiguration>();
             _repositoryConnectionMock = new Mock<IRepositoryConnection>();
