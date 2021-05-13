@@ -73,8 +73,6 @@ namespace EverteamTest
             //Arrange
             var getServiceById = 1;
 
-            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetServiceById", It.IsAny<Dictionary<string, string>>()));
-
             //Action
             var repo = new ServiceRepository(_configurationMock.Object, _repositoryConnectionMock.Object);
             var result = repo.GetServiceById(getServiceById);

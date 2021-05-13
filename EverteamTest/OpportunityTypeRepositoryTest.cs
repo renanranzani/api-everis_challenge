@@ -73,8 +73,6 @@ namespace EverteamTest
             //Arrange
             var opportunityTypeId = 1;
 
-            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetOpportunityTypeById", It.IsAny<Dictionary<string, string>>()));
-
             //Action
             var repo = new OpportunityTypeRepository(_configurationMock.Object, _repositoryConnectionMock.Object);
             var result = repo.GetOpportunityTypeById(opportunityTypeId);

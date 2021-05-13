@@ -74,8 +74,6 @@ namespace EverteamTest
             //Arrange
             var professionalLevelId = 1;
 
-            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetProfessionalLevelById", It.IsAny<Dictionary<string, string>>()));
-
             //Action
             var repo = new ProfessionalLevelRepository(_configurationMock.Object, _repositoryConnectionMock.Object);
             var result = repo.GetProfessionalLevelById(professionalLevelId);

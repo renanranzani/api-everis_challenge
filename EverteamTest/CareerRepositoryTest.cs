@@ -73,8 +73,6 @@ namespace EverteamTest
             //Arrange
             var careerId = 1;
 
-            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetCareerById", It.IsAny<Dictionary<string, string>>()));
-
             //Action
             var repo = new CareerRepository(_configurationMock.Object, _repositoryConnectionMock.Object);
             var result = repo.GetCareerById(careerId);
