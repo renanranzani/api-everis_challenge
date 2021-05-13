@@ -37,20 +37,6 @@ namespace EverteamTest
                         'ServiceId': '1',
                         'ProfessionalLevelId': '1',
                         'OpportunityTypeId': '1',
-                    },
-                    {
-                        'OpportunityId': '2',
-                        'OpportunityName': 'Squad Care',
-                        'OpportunityRequirements': '.NET Core',
-                        'DesirableRequirements': 'Conhecimento em Kafka',
-                        'DateRegister': '2021-05-05T00:00:00',
-                        'ClosingDate': '2021-05-05T00:00:00',
-                        'CancellationDate': '2021-05-05T00:00:00',
-                        'OpportunityStatus': 'false',
-                        'CareerId': '1',
-                        'ServiceId': '1',
-                        'ProfessionalLevelId': '1',
-                        'OpportunityTypeId': '1',    
                     }
                 ]";
 

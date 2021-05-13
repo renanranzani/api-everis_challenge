@@ -47,18 +47,6 @@ namespace EverteamTest
                         'CareerId': '1',
                         'ProfessionalLevelId': '1',
                         'OpportunityTypeId': '1',
-                    },
-                    {
-                        'VacationOpportunityId': '2',
-                        'VacationOpeningNumber': 'PRE - 2020 - 0001234',
-                        'VacationOpeningDate': '2021-05-05',
-                        'VacationOfferLetterDate':'2021-05-05',
-                        'VacationLeader': 'Thomas Anjos',
-                        'VacationCancellationdate': '2021-05-05',
-                        'VacationOpportunityStatus': 'false',
-                        'CareerId': '1',
-                        'ProfessionalLevelId': '1',
-                        'OpportunityTypeId': '1',
                     }
                 ]";
             _repositoryConnectionMock.Setup(x => x.SearchCommand("GetAllVacationOpportunities", It.IsAny<Dictionary<string, string>>())).Returns(jsonDataTable);

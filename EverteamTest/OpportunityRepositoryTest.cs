@@ -55,20 +55,6 @@ namespace EverteamTest
                         'ServiceId': '1',
                         'ProfessionalLevelId': '1',
                         'OpportunityTypeId': '1',
-                    },
-                    {
-                        'OpportunityId': '2',
-                        'OpportunityName': 'Squad Care',
-                        'OpportunityRequirements': '.NET Core',
-                        'DesirableRequirements': 'Conhecimento em Kafka',
-                        'DateRegister': '2021-05-05T00:00:00',
-                        'ClosingDate': '2021-05-05T00:00:00',
-                        'CancellationDate': '2021-05-05T00:00:00',
-                        'OpportunityStatus': 'false',
-                        'CareerId': '1',
-                        'ServiceId': '1',
-                        'ProfessionalLevelId': '1',
-                        'OpportunityTypeId': '1',    
                     }
                 ]";
             _repositoryConnectionMock.Setup(x => x.SearchCommand("GetAllOpportunities", It.IsAny<Dictionary<string, string>>())).Returns(jsonDataTable);
@@ -293,12 +279,12 @@ namespace EverteamTest
 		        'cancellationDate':'2021-05-05',
                 'opportunityStatus': true
                 }";
-            var opporunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
+            var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonOpportunity);
 
             var repo = new OpportunityRepository(_configurationMock.Object, _careerRepositoryMock.Object, _serviceRepositoryMock.Object,
                _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object, _repositoryConnectionMock.Object);
 
-            repo.UpdateOpportunity(opporunity);
+            repo.UpdateOpportunity(opportunity);
 
             Assert.IsTrue(true);
         }
