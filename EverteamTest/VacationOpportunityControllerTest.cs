@@ -39,15 +39,18 @@ namespace EverteamTest
                     }
                 ]";
 
-            var listOpportunities = JsonConvert.DeserializeObject<List<VacationOpportunity>>(jsonDataTable);
+            var listVacationOpportunities = JsonConvert.DeserializeObject<List<VacationOpportunity>>(jsonDataTable);
 
-            _vacationOpportunityService.Setup(x => x.GetAllVacationOpportunities()).Returns(listOpportunities);
+            _vacationOpportunityService.Setup(x => x.GetAllVacationOpportunities()).Returns(listVacationOpportunities);
 
             var control = new VacationOpportunityController(_vacationOpportunityService.Object);
 
             var result = control.GetAllVacationOpportunities();
 
-            Assert.IsNotNull(result);
+            var okResult = result as OkObjectResult;
+
+            Assert.IsNotNull(okResult);
+            Assert.AreEqual(200, okResult.StatusCode);
         }
 
         [TestMethod]
@@ -118,8 +121,11 @@ namespace EverteamTest
 
             var control = new VacationOpportunityController(_vacationOpportunityService.Object);
 
-            control.InsertVacationOpportunity(vacationOpportunity);
+            var result = control.InsertVacationOpportunity(vacationOpportunity);
 
+            var okResult = result as OkResult;
+
+            Assert.AreEqual(200, okResult.StatusCode);
             Assert.IsTrue(true);
         }
 
@@ -159,9 +165,11 @@ namespace EverteamTest
 
             var control = new VacationOpportunityController(_vacationOpportunityService.Object);
 
-            control.UpdateVacationOpportunity(vacationOpportunity);
+            var result = control.UpdateVacationOpportunity(vacationOpportunity);
 
-            Assert.IsTrue(true);
+            var okResult = result as OkResult;
+
+            Assert.AreEqual(200, okResult.StatusCode);
         }
 
         [TestMethod]
@@ -191,9 +199,11 @@ namespace EverteamTest
 
             var control = new VacationOpportunityController(_vacationOpportunityService.Object);
 
-            control.DeleteVacationOpportunity(vacationOpportunity);
+            var result = control.DeleteVacationOpportunity(vacationOpportunity);
 
-            Assert.IsTrue(true);
+            var okResult = result as OkResult;
+
+            Assert.AreEqual(200, okResult.StatusCode);
         }
 
         [TestMethod]

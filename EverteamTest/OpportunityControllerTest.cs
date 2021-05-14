@@ -136,9 +136,11 @@ namespace EverteamTest
 
             var control = new OpportunityController(_opportunityService.Object);
 
-            control.InsertOpportunity(opportunity);
+            var result = control.InsertOpportunity(opportunity);
 
-            Assert.IsTrue(true);
+            var okResult = result as OkResult;
+
+            Assert.AreEqual(200, okResult.StatusCode);
         }
 
         [TestMethod]
@@ -175,9 +177,11 @@ namespace EverteamTest
 
             var control = new OpportunityController(_opportunityService.Object);
 
-            control.UpdateOpportunity(opportunity);
+            var result = control.UpdateOpportunity(opportunity);
 
-            Assert.IsTrue(true);
+            var okResult = result as OkResult;
+
+            Assert.AreEqual(200, okResult.StatusCode);
         }
 
         [TestMethod]
@@ -200,15 +204,17 @@ namespace EverteamTest
         public void DeleteOpportunity_Ok()
         {
             var jsonDataTable = @"{      
-                'OpportunityId': 0
+                'OpportunityId': 1
                 }";
             var opportunity = JsonConvert.DeserializeObject<Opportunity>(jsonDataTable);
 
             var control = new OpportunityController(_opportunityService.Object);
 
-            control.DeleteOpportunity(opportunity);
+            var result = control.DeleteOpportunity(opportunity);
 
-            Assert.IsTrue(true);
+            var okResult = result as OkResult;
+
+            Assert.AreEqual(200, okResult.StatusCode);
         }
 
         [TestMethod]
