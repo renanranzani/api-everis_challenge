@@ -102,6 +102,40 @@ namespace EverteamTest
         }
 
         [TestMethod]
+        public void GetVacationOpportunityByOpeningDate_Ok()
+        {
+            var jsonDataTable = @"[
+                    {
+                        'VacationOpportunityId': '1',
+                        'VacationOpeningNumber': 'PRE - 2020 - 0001234',
+                        'VacationOpeningDate': '2021-05-05',
+                        'VacationOfferLetterDate':'2021-05-05',
+                        'VacationLeader': 'Thomas Anjos',
+                        'VacationCancellationdate': '2021-05-05',
+                        'VacationOpportunityStatus': 'true',
+                        'CareerId': '1',
+                        'ProfessionalLevelId': '1',
+                        'OpportunityTypeId': '1',
+                    }
+                ]";
+
+            var vacationDate = DateTime.Parse("2021-05-05");
+
+            var listOpportunities = JsonConvert.DeserializeObject<List<VacationOpportunity>>(jsonDataTable);
+
+            _vacationOpportunityService.Setup(x => x.GetAllVacationOpportunities()).Returns(listOpportunities);
+
+            var control = new VacationOpportunityController(_vacationOpportunityService.Object);
+
+            var result = control.GetVacationOpportunityByOpeningDate(vacationDate);
+
+            var okResult = result as OkObjectResult;
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(200, okResult.StatusCode);
+        }
+
+        [TestMethod]
         public void InsertVacationOpportunity_Ok()
         {
             var jsonDataTable = @"{

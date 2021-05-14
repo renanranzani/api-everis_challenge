@@ -123,6 +123,53 @@ namespace Everteam.Repository
             }
         }
 
+        public List<VacationOpportunity> GetVacationOpportunityByOpeningDate(DateTime vacationOpeningDate)
+        {
+            try
+            {
+                List<VacationOpportunity> listVacationOpportunities = new List<VacationOpportunity>();
+                VacationOpportunity vacationOpportunity = null;
+
+                parameters.Add("@VacationOpeningDate", vacationOpeningDate.ToString());
+
+                var read = _repositoryConnection.SearchCommand("GetVacationOpportunityByDateRegister", parameters);
+
+                DataTable dataTable = JsonConvert.DeserializeObject<DataTable>(read);
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    vacationOpportunity = new VacationOpportunity();
+
+                    vacationOpportunity.VacationOpportunityId = Convert.ToInt32(row["VacationOpportunityId"]);
+                    vacationOpportunity.VacationOpeningNumber = row["VacationOpeningNumber"].ToString();
+                    vacationOpportunity.VacationOpeningDate = Convert.ToDateTime(row["VacationOpeningDate"]);
+                    vacationOpportunity.VacationOfferLetterDate = Convert.ToDateTime(row["VacationOfferLetterDate"]);
+                    vacationOpportunity.VacationLeader = row["VacationLeader"].ToString();
+                    vacationOpportunity.VacationCancellationDate = Convert.ToDateTime(row["VacationCancellationDate"]);
+                    vacationOpportunity.VacationOpportunityStatus = Convert.ToBoolean(row["VacationOpportunityStatus"]);
+
+                    vacationOpportunity.Career = new Career();
+                    vacationOpportunity.Career.CareerId = Convert.ToInt32(row["CareerId"]);
+                    vacationOpportunity.Career = _careerRepository.GetCareerById(vacationOpportunity.Career.CareerId);
+
+                    vacationOpportunity.ProfessionalLevel = new ProfessionalLevel();
+                    vacationOpportunity.ProfessionalLevel.ProfessionalLevelId = Convert.ToInt32(row["ProfessionalLevelId"]);
+                    vacationOpportunity.ProfessionalLevel = _professionalLevelRepository.GetProfessionalLevelById(vacationOpportunity.ProfessionalLevel.ProfessionalLevelId);
+
+                    vacationOpportunity.OpportunityType = new OpportunityType();
+                    vacationOpportunity.OpportunityType.OpportunityTypeId = Convert.ToInt32(row["OpportunityTypeId"]);
+                    vacationOpportunity.OpportunityType = _opportunityTypeRepository.GetOpportunityTypeById(vacationOpportunity.OpportunityType.OpportunityTypeId);
+
+                    listVacationOpportunities.Add(vacationOpportunity);
+                }
+                return listVacationOpportunities;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public void InsertVacationOpportunity(VacationOpportunity vacationOpportunity)
         {
             try

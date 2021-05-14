@@ -10,6 +10,7 @@ namespace Everteam.Interfaces
     {
         public List<VacationOpportunity> GetAllVacationOpportunities();
         public VacationOpportunity GetVacationOpportunityByVacationLeader(string vacationLeader);
+        public List<VacationOpportunity> GetVacationOpportunityByOpeningDate(DateTime vacationOpeningDate);
         public void InsertVacationOpportunity(VacationOpportunity vacationOpportunity);
         public void UpdateVacationOpportunity(VacationOpportunity vacationOpportunity);
         public void DeleteVacationOpportunity(VacationOpportunity vacationOpportunity);

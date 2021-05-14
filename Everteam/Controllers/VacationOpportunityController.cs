@@ -37,6 +37,16 @@ namespace Everteam.Controllers
             return Ok(vacationOpportunityBd);
         }
 
+        [HttpGet("vagas/{vacationOpeningDate}")]
+        public IActionResult GetVacationOpportunityByOpeningDate(DateTime vacationOpeningDate)
+        {
+            if (vacationOpeningDate == null)
+                return BadRequest();
+
+            var listVacationOpportunities = _vacationOpportunity.GetVacationOpportunityByOpeningDate(vacationOpeningDate);
+            return Ok(listVacationOpportunities);
+        }
+
         [HttpPost]
         public IActionResult InsertVacationOpportunity(VacationOpportunity vacationOpportunity)
         {

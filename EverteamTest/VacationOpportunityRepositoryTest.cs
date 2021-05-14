@@ -149,6 +149,80 @@ namespace EverteamTest
         }
 
         [TestMethod]
+        public void GetVacationOpportunityByOpeningDate_Ok()
+        {
+            var jsonDataTable = @"[
+                    {
+                        'VacationOpportunityId': '1',
+                        'VacationOpeningNumber': 'PRE - 2020 - 0001234',
+                        'VacationOpeningDate': '2021-05-05',
+                        'VacationOfferLetterDate':'2021-05-05',
+                        'VacationLeader': 'Thomas Anjos',
+                        'VacationCancellationdate': '2021-05-05',
+                        'VacationOpportunityStatus': 'true',
+                        'CareerId': '1',
+                        'ProfessionalLevelId': '1',
+                        'OpportunityTypeId': '1',
+                    },
+                    {
+                        'VacationOpportunityId': '2',
+                        'VacationOpeningNumber': 'PRE - 2020 - 0001234',
+                        'VacationOpeningDate': '2021-05-05',
+                        'VacationOfferLetterDate':'2021-05-05',
+                        'VacationLeader': 'Thomas Anjos',
+                        'VacationCancellationdate': '2021-05-05',
+                        'VacationOpportunityStatus': 'false',
+                        'CareerId': '1',
+                        'ProfessionalLevelId': '1',
+                        'OpportunityTypeId': '1',
+                    }
+                ]";
+
+            var OpeningDate = DateTime.Parse("2021-05-05");
+
+            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetVacationOpportunityByDateRegister", It.IsAny<Dictionary<string, string>>())).Returns(jsonDataTable);
+
+            var repo = new VacationOpportunityRepository(_configurationMock.Object, _repositoryConnectionMock.Object, _careerRepositoryMock.Object,
+                                                         _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object);
+
+            var result = repo.GetVacationOpportunityByOpeningDate(OpeningDate);
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void GetVacationOpportunityByOpeningDate_ArgumentException()
+        {
+            var jsonDataTable = @"[{}]";
+
+            var OpeningDate = DateTime.Parse("2021-05-05");
+
+            _repositoryConnectionMock.Setup(x => x.SearchCommand("GetVacationOpportunityByDateRegister", It.IsAny<Dictionary<string, string>>())).Returns(jsonDataTable);
+
+            var repo = new VacationOpportunityRepository(_configurationMock.Object, _repositoryConnectionMock.Object, _careerRepositoryMock.Object,
+                                                         _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object);
+
+            var result = repo.GetVacationOpportunityByOpeningDate(OpeningDate);
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void GetVacationOpportunityByOpeningDate_ArgumentNullException()
+        {
+            var openingDate = DateTime.Parse("2021-05-05");
+
+            var repo = new VacationOpportunityRepository(_configurationMock.Object, _repositoryConnectionMock.Object, _careerRepositoryMock.Object,
+                                                         _professionalLevelRepositoryMock.Object, _opportunityTypeRepository.Object);
+
+            var result = repo.GetVacationOpportunityByOpeningDate(openingDate);
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
         public void InsertVacationOpportunity_Ok()
         {
             var jsonVacationOpportunity = @"{

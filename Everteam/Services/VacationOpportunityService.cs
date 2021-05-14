@@ -26,6 +26,11 @@ namespace Everteam.Services
             return _vacationOpportunityRepository.GetVacationOpportunityByVacationLeader(vacationLeader);
         }
 
+        public IEnumerable<VacationOpportunity> GetVacationOpportunityByOpeningDate(DateTime vacationOpeningDate)
+        {
+            return _vacationOpportunityRepository.GetVacationOpportunityByOpeningDate(vacationOpeningDate);
+        }
+
         public void InsertVacationOpportunity(VacationOpportunity vacationOpportunity)
         {
             _vacationOpportunityRepository.InsertVacationOpportunity(vacationOpportunity);
